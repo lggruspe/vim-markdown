@@ -510,11 +510,9 @@ function! s:HeaderDecrease(line1, line2, ...)
     endif
     if l:increase
         let l:forbiddenLevel = 6
-        let l:replaceLevels = [5, 1]
         let l:levelDelta = 1
     else
         let l:forbiddenLevel = 1
-        let l:replaceLevels = [2, 6]
         let l:levelDelta = -1
     endif
     for l:line in range(a:line1, a:line2)
@@ -523,10 +521,15 @@ function! s:HeaderDecrease(line1, line2, ...)
             return
         endif
     endfor
-    let l:numSubstitutions = s:SetexToAtx(a:line1, a:line2)
+
+    call s:SetexToAtx(a:line1, a:line2)
     let l:flags = (&gdefault ? '' : 'g')
-    for l:level in range(replaceLevels[0], replaceLevels[1], -l:levelDelta)
-        execute 'silent! ' . a:line1 . ',' . (a:line2 - l:numSubstitutions) . 'substitute/' . s:levelRegexpDict[l:level] . '/' . repeat('#', l:level + l:levelDelta) . '/' . l:flags
+    let l:header_list = s:GetHeaderList()
+    for h in l:header_list
+        if h.lnum < a:line1 || h.lnum > a:line2
+            continue
+        endif
+        execute 'silent! ' . h.lnum . 'substitute/' . s:levelRegexpDict[h.level] . '/' . repeat('#', h.level + l:levelDelta) . '/' . l:flags
     endfor
 endfunction
 
