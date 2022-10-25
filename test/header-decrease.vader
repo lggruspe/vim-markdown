@@ -89,3 +89,31 @@ Expect (no changes):
   ##### e
 
   ###### f
+
+Given markdown;
+```sh
+#!/bin/sh
+# Not a header
+```
+
+Execute (HeaderIncrease with # inside code block):
+  :HeaderIncrease
+
+Expect (no changes):
+  ```sh
+  #!/bin/sh
+  # Not a header
+  ```
+
+Given markdown;
+```sh
+## Not a header
+```
+
+Execute (HeaderDecrease with ## inside code block):
+  :HeaderDecrease
+
+Expect (no changes):
+  ```sh
+  ## Not a header
+  ```

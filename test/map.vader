@@ -151,3 +151,19 @@ Execute (]h):
   AssertEqual line('.'), 3
   normal ]h
   AssertEqual line('.'), 1
+
+Given markdown;
+# a
+
+```sh
+# Not a header
+```
+
+# b
+
+Execute (]] and [[ with code block):
+  AssertEqual line('.'), 1
+  normal ]]
+  AssertEqual line('.'), 7
+  normal [[
+  AssertEqual line('.'), 1
