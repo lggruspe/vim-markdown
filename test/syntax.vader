@@ -1526,3 +1526,35 @@ Given markdown;
 Execute (footnotes in setext headings):
   AssertEqual SyntaxOf('h1'), 'mkdFootnotes'
   AssertEqual SyntaxOf('h2'), 'mkdFootnotes'
+
+Given markdown;
+# `h1`
+
+## `h2`
+
+### `h3`
+
+#### `h4`
+
+##### `h5`
+
+###### `h6`
+
+Execute (code in atx headings):
+  AssertEqual SyntaxOf('h1'), 'mkdCode'
+  AssertEqual SyntaxOf('h2'), 'mkdCode'
+  AssertEqual SyntaxOf('h3'), 'mkdCode'
+  AssertEqual SyntaxOf('h4'), 'mkdCode'
+  AssertEqual SyntaxOf('h5'), 'mkdCode'
+  AssertEqual SyntaxOf('h6'), 'mkdCode'
+
+Given markdown;
+`h1`
+=
+
+`h2`
+-
+
+Execute (code in setext headings):
+  AssertEqual SyntaxOf('h1'), 'mkdCode'
+  AssertEqual SyntaxOf('h2'), 'mkdCode'
